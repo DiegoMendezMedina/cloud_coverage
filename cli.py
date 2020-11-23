@@ -1,5 +1,6 @@
 from pathlib import Path
 from to_array import img_to_array
+
 def read_terminal():
     ''' Reads the program input and validates it '''
     
