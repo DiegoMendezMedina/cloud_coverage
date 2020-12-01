@@ -1,8 +1,24 @@
 from PIL import Image
 import numpy as np
 
-def img_to_array(photo, v_flag):
-    ''' Changes the photo size, to the intrested area '''
+def img_to_array(photo):
+    ''' 
+    Changes the photo size, to the intrested area.
+    
+    Parameters
+    ----------
+
+    photo: String 
+       Which represents the name of the picture file  
+       we're intrested to calculate de cloud coverage index.
+
+    Returns 
+    -------
+    im_mask: numpy.ndarray
+       A third dimensional array masked whith a fourth channel;
+      255 on the intrested pixels.
+        0 on the ones around the intrested area.  
+    '''
 
     photo_split = photo.split(".")
     photo_cad = photo_split[0]
@@ -14,8 +30,6 @@ def img_to_array(photo, v_flag):
     mask = mask.reshape(*mask.shape, 1)
     
     mask = mask / 255
-
-
     dst = im_trim * mask
     
     Image.fromarray(dst.astype(np.uint8)).save('samples/'+photo_cad+'.png')
