@@ -1,5 +1,6 @@
 from pathlib import Path
-from to_array import img_to_array
+from PIL import Image
+import numpy as np
 
 def read_terminal():
     ''' Reads the program input and validates it '''
@@ -26,7 +27,8 @@ def read_terminal():
     
     if v_program:
         if v_photo:
-            img = img_to_array(photo, v_flag)
+            img_masked = to_nparray(photo)
+
         else :
             print("Photo not found on sample");
             return;
@@ -59,3 +61,29 @@ def valid_program(exe):
     if exe != "CCI" :
         return False
     return True
+
+def to_nparray(photo):
+    photo_split = photo.split(".")
+    photo_cad = photo_split[0]
+    
+    im = np.array(Image.open('samples/'+photo))
+    im_trim = im[106:2806, 825:3525]
+    im_mask = im_trim
+    cad = im_trim.shape
+    height = cad[0]
+    width = cad[1]
+        
+    Image.fromarray(im_mask.astype(np.uint8)).save('samples/'+photo_cad+'.png')
+    im_mask = np.array(Image.open('samples/'+photo_cad+".png"))
+    im_mask = np.dstack( (im_trim, np.ones((width, height))))
+
+    mask = create_circular_mask(width, height, 1350)
+    im_mask[~mask] = 0
+    return im_mask
+
+
+def create_circular_mask(h, w,  radius):
+    Y, X = np.ogrid[:h, :w]
+    dist_from_center = np.sqrt((X - 1350)**2 + (Y-1350)**2)
+    mask = dist_from_center <= radius
+    return mask
