@@ -75,10 +75,15 @@ def to_nparray(photo):
         
     Image.fromarray(im_mask.astype(np.uint8)).save('samples/'+photo_cad+'.png')
     im_mask = np.array(Image.open('samples/'+photo_cad+".png"))
-    im_mask = np.dstack( (im_trim, np.ones((width, height))))
+    
+    a = np.zeros((width, height))
+    a.fill(255)
+    
+    im_mask = np.dstack((im_trim, a))
 
     mask = create_circular_mask(width, height, 1350)
     im_mask[~mask] = 0
+
     return im_mask
 
 
