@@ -9,31 +9,24 @@ def read_terminal():
     txt = entry.split(" ")
     
     if len(txt) < 2:
-        print("Invalid input size");
         return;
     
     program = txt[0]
     photo = txt[1]
     flag =  "none"
+    
     if len (txt) > 2:
         flag = txt[2]
         
-    v_program = valid_program(program)
     v_photo = check_photo_existance(photo)
     v_flag = False
     
     if flag != "none":
         v_flag = valid_flag(flag)
-    
-    if v_program:
-        if v_photo:
-            img_masked = to_nparray(photo)
-
-        else :
-            print("Photo not found on sample");
-            return;
-    else:
-        print("Wrong execute call")
+               
+    if v_photo:
+        img_masked = to_nparray(photo)
+    else :
         return;
 
 def check_photo_existance(photo):
@@ -50,17 +43,9 @@ def valid_flag(flag):
     Otherwhise prints a "invalid flag" message and returns False.'''
 
     if flag.upper() != 'S':
-        print("Invalid flag")
         return False
     return True
 
-def valid_program(exe):
-    ''' Returns True if the string received is "CCI";
-    Otherwhise returns False.'''
-    
-    if exe != "CCI" :
-        return False
-    return True
 
 def to_nparray(photo):
     '''
@@ -84,12 +69,8 @@ def to_nparray(photo):
     im = np.array(Image.open('samples/'+photo))
     im_trim = im[106:2806, 825:3525]
     im_mask = im_trim
-    cad = im_trim.shape
-    height = cad[0]
-    width = cad[1]
+    height, width, _= im_trim.shape
         
-    Image.fromarray(im_mask.astype(np.uint8)).save('samples/'+photo_cad+'.png')
-    im_mask = np.array(Image.open('samples/'+photo_cad+".png"))
     
     a = np.zeros((width, height))
     a.fill(255)
@@ -98,7 +79,7 @@ def to_nparray(photo):
 
     mask = create_circular_mask(width, height, 1350)
     im_mask[~mask] = 0
-
+    
     return im_mask
 
 
