@@ -63,6 +63,21 @@ def valid_program(exe):
     return True
 
 def to_nparray(photo):
+    '''
+    Given the direction of the file, this method changes 
+    the img file to a numpy array with four channels.
+    
+    
+    Parameters
+    ----------
+    String
+    Direction of the photo.
+
+    Returns
+    ---------
+    numpy array masked 255 in the fourth channel only on the intrested 
+    area.
+    '''
     photo_split = photo.split(".")
     photo_cad = photo_split[0]
     
@@ -88,6 +103,18 @@ def to_nparray(photo):
 
 
 def create_circular_mask(h, w,  radius):
+    '''
+    Creates a circular mask given the height, width of the file and area
+    of the zone you want to mask.
+    
+    Takes the middle point as the center of the file. 
+    
+    Parameters
+    ----------
+    int h: height
+    int w: width
+    int radius: radius of the intrested area.
+    '''
     Y, X = np.ogrid[:h, :w]
     dist_from_center = np.sqrt((X - 1350)**2 + (Y-1350)**2)
     mask = dist_from_center <= radius
