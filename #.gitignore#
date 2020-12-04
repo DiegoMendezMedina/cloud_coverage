@@ -1,7 +1,0 @@
-*.png
-*.PNG
-*.jpg
-*.JPG
-*.*~
-.gitignore
-__pycache__/*
