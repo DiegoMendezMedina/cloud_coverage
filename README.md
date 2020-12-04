@@ -33,7 +33,7 @@ To run the test, execute:
 pytest ./tests
 ```
 
-##Extra Info
+## Directory Info
 
 * The photos may be on the 'samples' directory. 
 
