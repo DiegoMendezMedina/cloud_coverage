@@ -14,6 +14,8 @@ def read_terminal():
     
     photo = txt[0]
     flag =  "none"
+    
+    photo_cad = photo.split(".")
     v_flag = False
     if len (txt) > 1:
         flag = txt[1]
@@ -28,7 +30,8 @@ def read_terminal():
         img_masked = to_nparray(photo)
         img_result, index = cloudiness(img_masked)
         if v_flag:
-            Image.fromarray(img_result.astype(np.uint8)).save('111.png')
+            Image.fromarray(img_result.astype(np.uint8)).save("Output/"+
+                        photo_cad[0]+"-seg.png")
         print(index)
     else :
         return
@@ -37,7 +40,7 @@ def check_photo_existance(photo):
     ''' Returns True if the photo exists on the sample directory;
     Otherwhise returns False'''
     
-    fileName = r"./"+photo
+    fileName = r"samples/"+photo
     fileObj = Path(fileName)
     return fileObj.is_file()
 
@@ -70,7 +73,7 @@ def to_nparray(photo):
     photo_split = photo.split(".")
     photo_cad = photo_split[0]
     
-    im = np.array(Image.open('./'+photo))
+    im = np.array(Image.open('samples/'+photo))
     im_trim = im[106:2806, 825:3525]
     im_mask = im_trim
     height, width, _= im_trim.shape
