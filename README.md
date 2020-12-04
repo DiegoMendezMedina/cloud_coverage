@@ -43,25 +43,26 @@ pytest ./tests
 
 To run the app, execute:
 
-'''bash
+```bash
 python3 run.py
-'''
+```
 
 Then, if 11833.JPG is on the 'samples' directory;
 
-'''bash
+```bash
 11833.JPG
-'''
+```
+
 
 If you want to save the processed image:
 
-'''bash
+```bash
 11833.JPG s
-'''
+```
 
 or
 
-'''bash
+```bash
 11833.JPG S
-'''
+```
 
